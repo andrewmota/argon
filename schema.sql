@@ -6,19 +6,19 @@ CREATE TYPE remoto AS ENUM ('S', 'N');
 
 CREATE TABLE usuario(
 	id serial,
-	nome varchar(30) NOT NULL,
-	email varchar(50) NOT NULL,
-	login varchar(20) NOT NULL,
-	senha varchar(20) NOT NULL,
+	nome text NOT NULL,
+	email text NOT NULL,
+	login text NOT NULL,
+	senha text NOT NULL,
 	CONSTRAINT "usuarioPK" PRIMARY KEY (id)
 );
 
 CREATE TABLE empresa(
 	id serial,
-	nome varchar(30) NOT NULL,
-	email varchar(50) NOT NULL,
-	login varchar(20) NOT NULL,
-	senha varchar(20) NOT NULL,
+	nome text NOT NULL,
+	email text NOT NULL,
+	login text NOT NULL,
+	senha text NOT NULL,
 	tipo varchar(20) NOT NULL,
 	CONSTRAINT "empresaPK" PRIMARY KEY (id)
 );
