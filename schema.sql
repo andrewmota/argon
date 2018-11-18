@@ -21,8 +21,9 @@ CREATE TABLE empresa(
 	login varchar(20) NOT NULL,
 	senha varchar(20) NOT NULL,
 	tipo varchar(20) NOT NULL,
-	CONSTRAINT "usuarioPK" PRIMARY KEY (id)
+	CONSTRAINT "empresaPK" PRIMARY KEY (id)
 );
+
 CREATE TABLE vaga(
 	id serial,
 	titulo text NOT NULL,
@@ -35,6 +36,7 @@ CREATE TABLE vaga(
 	descricao text
 	CONSTRAINT "vagaPK" PRIMARY KEY (id)
 );
+
 CREATE TABLE candidatura(
 	id serial,
 	idusuario int NOT NULL,
