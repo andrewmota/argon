@@ -4,7 +4,6 @@ CREATE TYPE nivel AS ENUM ('J', 'P', 'S');
 CREATE TYPE "tipoContrato" AS ENUM ('E', 'C', 'P');
 CREATE TYPE remoto AS ENUM ('S', 'N');
 
-
 CREATE TABLE usuario(
 	id serial,
 	nome varchar(30) NOT NULL,
