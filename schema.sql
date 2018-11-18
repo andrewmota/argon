@@ -25,6 +25,7 @@ CREATE TABLE empresa(
 );
 CREATE TABLE vaga(
 	id serial,
+	titulo text NOT NULL,
 	idempresa int NOT NULL,
 	nível nivel,
 	"tipoContrato" "tipoContrato",
