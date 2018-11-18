@@ -32,7 +32,7 @@ CREATE TABLE vaga(
 	remoto remoto,
 	local text,
 	salario numeric,
-	descricao text
+	descricao text,
 	CONSTRAINT "vagaPK" PRIMARY KEY (id)
 );
 
@@ -53,10 +53,10 @@ CREATE TABLE usuarioSkills(
 	idusuario int NOT NULL,
 	idhabilidade int NOT NULL,
 	"tempoExperiencia" text NOT NULL,
-	CONSTRAINT "usuarioSkillsFKusuario" FOREIGN KEY (idusuario) REFERENCES usuario(id),
+	CONSTRAINT "usuarioSkillsFKusuario" FOREIGN KEY (idusuario) REFERENCES usuario(id)
 		ON DELETE CASCADE
-		ON UPDATE CASCADE
-	CONSTRAINT "usuarioSkillshabilidade" FOREIGN KEY (idhabilidade) REFERENCES habilidade(id),
+		ON UPDATE CASCADE,
+	CONSTRAINT "usuarioSkillshabilidade" FOREIGN KEY (idhabilidade) REFERENCES habilidade(id)
 		ON DELETE CASCADE
 		ON UPDATE CASCADE
 );
