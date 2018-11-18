@@ -30,6 +30,7 @@ CREATE TABLE vaga(
 	nível nivel,
 	"tipoContrato" "tipoContrato",
 	remoto remoto,
+	local text,
 	salario numeric,
 	descricao text
 	CONSTRAINT "vagaPK" PRIMARY KEY (id)
