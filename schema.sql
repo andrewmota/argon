@@ -2,6 +2,7 @@ CREATE DATABASE trabfinal ;
 
 CREATE TYPE nivel AS ENUM ('J', 'P', 'S');
 CREATE TYPE "tipoContrato" AS ENUM ('E', 'C', 'P');
+CREATE TYPE "tipoEmpresa" AS ENUM ('S', 'P', 'M', 'G');
 CREATE TYPE remoto AS ENUM ('S', 'N');
 
 CREATE TABLE usuario(
@@ -19,7 +20,7 @@ CREATE TABLE empresa(
 	email text NOT NULL,
 	login text NOT NULL,
 	senha text NOT NULL,
-	tipo text NOT NULL,
+	tipo "tipoEmpresa" NOT NULL,
 	CONSTRAINT "empresaPK" PRIMARY KEY (id)
 );
 
