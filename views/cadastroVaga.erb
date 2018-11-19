@@ -1,0 +1,80 @@
+<div class="row justify-content-center">
+	<div class="col-lg-6 col-md-8">
+		<div class="card bg-secondary shadow border-0">
+			<div class="card-body px-lg-5 pt-lg-5">
+				<div class="text-center text-muted mb-4">
+					<h2>Cadastrar vaga</h2>
+				</div>
+				<form role="form" method="post" action="/vaga/cadastro">
+                    <div class="form-group">
+						<div class="input-group input-group-alternative mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text">
+									<i class="fas fa-briefcase"></i>
+								</span>
+							</div>
+							<input class="form-control" placeholder="Título Vaga" type="text" name="titulo" required>
+						</div>
+					</div>
+					<div class="form-group">
+                        <select class="custom-select" name="nivel" required>
+							<option selected disabled>Nível</option>
+							<% @opcoes['nivel'].to_hash().each do |chave, valor| %>
+								<option value="<%= chave %>"><%= valor %></option>
+							<% end %>
+						</select>
+                    </div>
+					<div class="form-group">
+                        <select class="custom-select" name="tipoContrato" required>
+							<option selected disabled>Tipo Contrato</option>
+							<% @opcoes['tipoContrato'].to_hash().each do |chave, valor| %>
+								<option value="<%= chave %>"><%= valor %></option>
+							<% end %>
+						</select>
+                    </div>
+					<div class="form-group">
+                        <select class="custom-select" name="remoto" required>
+							<option selected disabled>Trabalho remoto?</option>
+							<% @opcoes['remoto'].to_hash().each do |chave, valor| %>
+								<option value="<%= chave %>"><%= valor %></option>
+							<% end %>
+						</select>
+                    </div>
+					<div class="form-group">
+						<div class="input-group input-group-alternative mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text">
+									<i class="fas fa-map-marker-alt"></i>
+								</span>
+							</div>
+							<input class="form-control" placeholder="Local de trabalho" type="text" name="local">
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="input-group input-group-alternative mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text">
+									<i class="fas fa-money-bill"></i>
+								</span>
+							</div>
+							<input class="form-control" placeholder="Salário" type="number" name="salario" required>
+						</div>
+					</div>
+					<div class="form-group">
+                        <textarea class="form-control form-control-alternative" rows="4" placeholder="Descrição vaga" name="descricao"></textarea>
+                    </div>
+					<div class="text-center">
+						<button type="submit" class="btn btn-default mt-4">Cadastrar vaga</button>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="row mt-2">
+			<div class="col-12 text-center">
+				<a href="/login" class="text-light">
+					<small>Já possui conta? Logue-se</small>
+				</a>
+			</div>
+		</div>
+	</div>
+</div>

@@ -12,10 +12,10 @@ class VagaDAO
     end
 
     def save(vaga)
-        array = [vaga.titulo, vaga.empresa.id, vaga.tipoContrato, vaga.remoto, vaga.local, vaga.salario, vaga.descricao];
+        array = [vaga.titulo, vaga.empresa.id, vaga.nivel, vaga.tipoContrato, vaga.remoto, vaga.local, vaga.salario, vaga.descricao];
         
         if vaga.id.nil?
-            query = 'INSERT INTO vaga(titulo, idempresa, nivel, "tipoContrato", remoto, local, salario, descricao) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id'
+            query = 'INSERT INTO vaga(titulo, idempresa, nivel, "tipoContrato", remoto, local, salario, descricao) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id'
         else
             query = 'UPDATE vaga SET titulo=$2, idempresa=$3, nivel=$4, "tipoContrato"=$5, remoto=$6, local=$7, salario=$8, descricao=$9 WHERE id = $1'
             array<<vaga.id

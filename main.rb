@@ -136,3 +136,23 @@ get '/empresa/vagas' do
     @vagas = vagaController.getEmpresa(@empresa.id)
     erb :vagas, :layout => :baseAdmin
 end
+
+get '/vaga/cadastro' do
+    if !session[:empresa] or session[:usuario] then
+        redirect "/login"
+    end
+
+    @titulo = "Cadastrar Vaga"
+    @opcoes = hash
+    erb :cadastroVaga, :layout => :baseForm
+end
+
+post '/vaga/cadastro' do
+    if !session[:empresa] or session[:usuario] then
+        redirect "/login"
+    end
+    
+    empresa = session[:empresa]
+    vagaController.save(params, empresa)
+    redirect "/vagas"
+end

@@ -8,7 +8,7 @@ class VagaController
     end
     
     def save(params, empresa)
-        vaga = Vaga.new(nil, params['titulo'], empresa, params['tipoContrato'], params['remoto'], params['local'], params['salario'], params['descricao'])
+        vaga = Vaga.new(nil, params['titulo'], empresa, params['nivel'], params['tipoContrato'], params['remoto'], params['local'], params['salario'], params['descricao'])
         vaga.id = params['id'] if params['id']
 
         @dao.save(vaga)

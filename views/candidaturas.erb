@@ -1,5 +1,5 @@
 <div class="row">
-	<div class="col">
+	<div class="col-10 ml-auto mr-auto">
 		<div class="card shadow">
 			<div class="card-header border-0">
 				<h3 class="mb-0"><%= @titulo %></h3>
@@ -23,7 +23,9 @@
 						<tr>
 							<th scope="row">
 								<div class="align-items-center">
-									<span class="mb-0 text-sm"><%= candidatura.vaga.titulo %></span>
+									<a href="/vaga/<%= candidatura.vaga.id %>">
+										<span class="mb-0 text-sm"><%= candidatura.vaga.titulo %></span>
+									</a>
 								</div>
 							</th>
 							<td>
@@ -57,9 +59,8 @@
 										<i class="fas fa-ellipsis-v"></i>
 									</a>
 									<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-										<a class="dropdown-item" href="#">Action</a>
-										<a class="dropdown-item" href="#">Another action</a>
-										<a class="dropdown-item" href="#">Something else here</a>
+										<a class="dropdown-item disabled" href="#">Editar</a>
+										<a class="dropdown-item" href="/candidatura/deletar/<%= candidatura.id %>">Deletar</a>
 									</div>
 								</div>
 							</td>
@@ -78,31 +79,6 @@
 					<% end %>
 					</tbody>
 				</table>
-			</div>
-			<div class="card-footer py-4">
-				<nav aria-label="...">
-					<ul class="pagination justify-content-end mb-0">
-						<li class="page-item disabled">
-						<a class="page-link" href="#" tabindex="-1">
-							<i class="fas fa-angle-left"></i>
-							<span class="sr-only">Previous</span>
-						</a>
-						</li>
-						<li class="page-item active">
-						<a class="page-link" href="#">1</a>
-						</li>
-						<li class="page-item">
-						<a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
-						</li>
-						<li class="page-item"><a class="page-link" href="#">3</a></li>
-						<li class="page-item">
-						<a class="page-link" href="#">
-							<i class="fas fa-angle-right"></i>
-							<span class="sr-only">Next</span>
-						</a>
-						</li>
-					</ul>
-				</nav>
 			</div>
 		</div>
 	</div>
