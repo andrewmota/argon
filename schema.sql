@@ -19,7 +19,7 @@ CREATE TABLE empresa(
 	email text NOT NULL,
 	login text NOT NULL,
 	senha text NOT NULL,
-	tipo varchar(20) NOT NULL,
+	tipo text NOT NULL,
 	CONSTRAINT "empresaPK" PRIMARY KEY (id)
 );
 
@@ -27,7 +27,7 @@ CREATE TABLE vaga(
 	id serial,
 	titulo text NOT NULL,
 	idempresa int NOT NULL,
-	nível nivel,
+	nivel nivel,
 	"tipoContrato" "tipoContrato",
 	remoto remoto,
 	local text,
