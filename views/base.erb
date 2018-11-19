@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<title><%= @titulo %> - Argon</title>
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+		<link href="/vendor/nucleo/css/nucleo.css" rel="stylesheet">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+		<link type="text/css" href="/css/argon.css?v=1.0.0" rel="stylesheet">
+	</head>
+
+	<body>
+		<nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
+			<div class="container-fluid">
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenav-collapse-main" aria-controls="sidenav-main" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<a class="navbar-brand pt-0 ml-auto mr-auto" href="/">
+					<img src="/img/brand/blue.png" class="navbar-brand-img" alt="...">
+				</a>
+				<% if !@usuario.nil? %>
+				<ul class="nav align-items-center d-md-none">
+					<li class="nav-item dropdown">
+						<a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<div class="media align-items-center">
+								<span>
+									<i class="far fa-user"></i>
+								</span>
+							</div>
+						</a>
+						<div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
+							<a href="/usuario" class="dropdown-item">
+								<i class="fas fa-user"></i>
+								<span>Meu perfil</span>
+							</a>
+							<a href="/usuario/candidaturas" class="dropdown-item">
+								<i class="fas fa-user"></i>
+								<span>Minhas candidaturas</span>
+							</a>
+							<a href="/logout" class="dropdown-item">
+								<i class="fas fa-sign-out-alt"></i>
+								<span>Sair</span>
+							</a>
+						</div>
+					</li>
+				</ul>
+				<% elsif !@empresa.nil? %>
+				<ul class="nav align-items-center d-md-none">
+					<li class="nav-item dropdown">
+						<a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<div class="media align-items-center">
+								<span>
+									<i class="far fa-user"></i>
+								</span>
+							</div>
+						</a>
+						<div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
+							<a href="/usuario" class="dropdown-item">
+								<i class="fas fa-user"></i>
+								<span>Meu perfil</span>
+							</a>
+							<a href="/empresa/vagas" class="dropdown-item">
+								<i class="fas fa-user"></i>
+								<span>Minhas vagas</span>
+							</a>
+							<a href="/logout" class="dropdown-item">
+								<i class="fas fa-sign-out-alt"></i>
+								<span>Sair</span>
+							</a>
+						</div>
+					</li>
+				</ul>
+				<% end %>
+				
+				<div class="collapse navbar-collapse" id="sidenav-collapse-main">
+					<div class="navbar-collapse-header d-md-none">
+						<div class="row">
+							<div class="col-6 collapse-brand">
+								<a href="/">
+									<img src="/img/brand/blue.png">
+								</a>
+							</div>
+							<div class="col-6 collapse-close">
+								<button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#sidenav-collapse-main" aria-controls="sidenav-main" aria-expanded="false" aria-label="Toggle sidenav">
+									<span></span>
+									<span></span>
+								</button>
+							</div>
+						</div>
+					</div>
+					<ul class="navbar-nav ml-1">
+						<li class="nav-item my-2">
+							<h6 class="navbar-heading text-muted">Filtrar </h6>
+							<a href="/vagas" class="badge badge-primary">
+								<i class="fas fa-redo-alt"></i> Todas vagas
+							</a>
+						</li>
+						<li class="nav-item my-2">
+							<h6 class="navbar-heading text-muted">Tipo de contrato</h6>
+							<a href="/vagas?tipoContrato=E" class="badge badge-primary" name="tipoContrato" id="E">Estágio</a>
+							<a href="/vagas?tipoContrato=C" class="badge badge-primary" name="tipoContrato" id="C">CLT</a>
+							<a href="/vagas?tipoContrato=P" class="badge badge-primary" name="tipoContrato" id="P">PJ</a>
+						</li>
+						<li class="nav-item my-2">
+							<h6 class="navbar-heading text-muted">Nível de experiência</h6>
+							<a href="/vagas?nivel=J" class="badge badge-primary" name="nivel" id="J">Júnior</a>
+							<a href="/vagas?nivel=P" class="badge badge-primary" name="nivel" id="P">Pleno</a>
+							<a href="/vagas?nivel=S" class="badge badge-primary" name="nivel" id="S">Sênior</a>
+						</li>
+						<li class="nav-item my-2">
+							<h6 class="navbar-heading text-muted">Tipo empresa</h6>
+							<a href="/vagas?tipo=J" class="badge badge-primary" name="tipo" id="S">StartUp</a>
+							<a href="/vagas?tipo=P" class="badge badge-primary" name="tipo" id="P">Pequena</a>
+							<a href="/vagas?tipo=S" class="badge badge-primary" name="tipo" id="M">Média</a>
+							<a href="/vagas?tipo=S" class="badge badge-primary" name="tipo" id="G">Grande</a>
+						</li>
+						<li class="nav-item my-2">
+							<h6 class="navbar-heading text-muted">Remoto</h6>
+							<a href="/vagas?remoto=S" class="badge badge-primary" name="remoto" id="S">Sim</a>
+							<a href="/vagas?remoto=N" class="badge badge-primary" name="remoto" id="N">Não</a>
+						</li>
+						
+					</ul>
+				</div>
+			</div>
+		</nav>
+		<div class="main-content">
+			<nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
+				<div class="container-fluid">
+					<a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="/">Vagas de emprego</a>
+					<% if !@usuario.nil? %>
+					<ul class="navbar-nav align-items-center d-none d-md-flex">
+						<li class="nav-item dropdown">
+							<a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<div class="media align-items-center">
+									<span>
+										<i class="far fa-user"></i>
+									</span>
+									<div class="media-body ml-2 d-none d-lg-block">
+										<span class="mb-0 text-sm  font-weight-bold"><%= @usuario.nome %></span>
+									</div>
+								</div>
+							</a>
+							<div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
+								<a href="/usuario" class="dropdown-item">
+									<i class="fas fa-user"></i>
+									<span>Meu perfil</span>
+								</a>
+								<a href="/usuario/candidaturas" class="dropdown-item">
+									<i class="fas fa-list-ul"></i>
+									<span>Minhas candidaturas</span>
+								</a>
+								<a href="/logout" class="dropdown-item">
+									<i class="fas fa-sign-out-alt"></i>
+									<span>Sair</span>
+								</a>
+							</div>
+						</li>
+					</ul>
+					<% elsif !@empresa.nil? %>
+					<ul class="navbar-nav align-items-center d-none d-md-flex">
+						<li class="nav-item dropdown">
+							<a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<div class="media align-items-center">
+									<span>
+										<i class="far fa-user"></i>
+									</span>
+									<div class="media-body ml-2 d-none d-lg-block">
+										<span class="mb-0 text-sm  font-weight-bold"><%= @empresa.nome %></span>
+									</div>
+								</div>
+							</a>
+							<div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
+								<a href="/usuario" class="dropdown-item">
+									<i class="fas fa-user"></i>
+									<span>Meu perfil</span>
+								</a>
+								<a href="/empresa/vagas" class="dropdown-item">
+									<i class="fas fa-list-ul"></i>
+									<span>Minhas vagas</span>
+								</a>
+								<a href="/logout" class="dropdown-item">
+									<i class="fas fa-sign-out-alt"></i>
+									<span>Sair</span>
+								</a>
+							</div>
+						</li>
+					</ul>
+					<% else %>
+					<ul class="navbar-nav align-items-center d-none d-md-flex">
+						<a class="nav-link" href="/login">
+							<span class="text-sm font-weight-bold">Login</span>
+						</a>
+					</ul>
+					<% end %>
+				</div>
+			</nav>
+			
+			<div class="header bg-gradient-default pb-8 pt-md-6">
+				<div class="container-fluid">
+					<div class="header-body">
+						<h2 class="text-center text-secondary"><%= @subtitulo %></h2>
+					</div>
+				</div>
+			</div>
+			<div class="container-fluid mt--7">
+				
+				<%= yield %>
+			
+				<footer class="py-5">
+					<div class="container">
+						<div class="row align-items-center justify-content-xl-between">
+							<div class="col-xl-6">
+								<div class="copyright text-center text-xl-left text-muted">
+									&copy; 2018 <a href="javascript:void(0)" class="font-weight-bold ml-1 text-default" target="_blank">Argon</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</footer>
+			</div>
+		</div>
+
+		<script src="/vendor/jquery/dist/jquery.min.js"></script>
+		<script src="/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+		<script src="/vendor/chart.js/dist/Chart.min.js"></script>
+		<script src="/vendor/chart.js/dist/Chart.extension.js"></script>
+		<script src="/js/argon.js?v=1.0.0"></script>
+		<script src="/js/scripts.js?v=1.0.0"></script>
+	</body>
+
+</html>

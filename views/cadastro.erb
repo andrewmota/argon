@@ -1,0 +1,105 @@
+<div class="row justify-content-center">
+	<div class="col-lg-6 col-md-8">
+		<div class="card bg-secondary shadow border-0">
+			<div class="card-body px-lg-5 pt-lg-5">
+				<div class="text-center text-muted mb-4">
+					<h2>Cadastre-se</h2>
+				</div>
+				<form role="form" method="post" action="/cadastro">
+					<div class="row">
+                        <div class="col-md-3">
+                        </div>
+                        <div class="custom-control custom-radio mb-3 col-md-3">
+                            <input name="tipoUsuario" class="custom-control-input" value="empresa" id="empresa" type="radio">
+                            <label class="custom-control-label" for="empresa">Empresa</label>
+                        </div>  
+                        <div class="custom-control custom-radio mb-3 col-md-4">
+                            <input name="tipoUsuario" class="custom-control-input" value="usuario" id="candidato" type="radio" checked="">
+                            <label class="custom-control-label" for="candidato">Candidato</label>
+                        </div>
+                    </div>
+					<div class="row tipoEmpresa" style="display: none">
+                        <div class="custom-control custom-radio mb-3 col-md-3">
+                            <input name="tipo" class="custom-control-input" id="startup" value="startup" type="radio" checked="">
+                            <label class="custom-control-label" for="startup">StartUp</label>
+                        </div> 
+                        <div class="custom-control custom-radio mb-3 col-md-3">
+                            <input name="tipo" class="custom-control-input" id="pequena" value="pequena" type="radio">
+                            <label class="custom-control-label" for="pequena">Pequena Empresa</label>
+                        </div>  
+                        <div class="custom-control custom-radio mb-3 col-md-3">
+                            <input name="tipo" class="custom-control-input" id="media" value="media" type="radio">
+                            <label class="custom-control-label" for="media">Média Empresa</label>
+                        </div>
+						<div class="custom-control custom-radio mb-3 col-md-3">
+                            <input name="tipo" class="custom-control-input" id="grande" value="grande" type="radio">
+                            <label class="custom-control-label" for="grande">Grande Empresa</label>
+                        </div>
+                    </div>
+					<div class="form-group">
+						<div class="input-group input-group-alternative mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text">
+									<i class="fas fa-user"></i>
+								</span>
+							</div>
+							<input class="form-control" placeholder="Nome" type="text" name="nome" required>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="input-group input-group-alternative mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text">
+									<i class="fas fa-envelope"></i>
+								</span>
+							</div>
+							<input class="form-control" placeholder="E-mail" type="email" name="email" required>
+						</div>
+					</div>
+					<div class="form-group mb-3">
+                        <div class="input-group input-group-alternative">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fas fa-user"></i>
+                                </span>
+                            </div>
+                            <input class="form-control" placeholder="Nome de usuário" type="text" name="login" id="login" required>
+                        </div>
+                    </div>
+					<div class="form-group">
+                        <div class="input-group input-group-alternative">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fas fa-key"></i>
+                                </span>
+                            </div>
+                            <input class="form-control" placeholder="Senha" type="password" name="senha" id="senha" required>
+                        </div>
+                    </div>
+					<div class="row my-4">
+						<div class="col-12">
+							<div class="custom-control custom-control-alternative custom-checkbox">
+								<input class="custom-control-input" id="customCheckRegister" type="checkbox" required>
+								<label class="custom-control-label" for="customCheckRegister">
+									<span class="text-muted">Eu aceito os 
+										<a href="javascript:void(0)">Termos de Privacidade</a>
+									</span>
+								</label>
+							</div>
+						</div>
+					</div>
+					<div class="text-center">
+						<button type="submit" class="btn btn-default mt-4">Criar conta</button>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="row mt-2">
+			<div class="col-12 text-center">
+				<a href="/login" class="text-light">
+					<small>Já possui conta? Logue-se</small>
+				</a>
+			</div>
+		</div>
+	</div>
+</div>
