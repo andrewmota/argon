@@ -6,7 +6,10 @@ $(document).ready(function() {
             $(".tipoEmpresa").hide();
     });
 
-    
+    if($("input[name='tipoUsuario']").val() == "empresa")
+        $(".tipoEmpresa").show();
+    else
+        $(".tipoEmpresa").hide();
 
 });
 

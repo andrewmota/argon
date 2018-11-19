@@ -1,6 +1,6 @@
 require_relative("conexao.rb")
 require_relative("usuario.rb")
-require_relative("vagaDAO.rb")
+require_relative("candidaturaDAO.rb")
 
 class UsuarioDAO
     def save(usuario)
@@ -26,12 +26,14 @@ class UsuarioDAO
         res = conecta{|con|
             con.exec('SELECT * FROM usuario')
         }
+        candidaturaDAO = CandidaturaDAO.new
         lista = []
+
         res.each {|linha|
             usuario = Usuario.new nil, linha["nome"], linha["email"], linha["login"], linha["senha"]
 
             usuario.id = linha["id"]
-            #usuario.candidaturas = self.getCandidaturas(usuario.id)
+            #usuario.candidaturas = candidaturaDAO.getUsuario(usuario.id)
 
             lista.push usuario
         }
@@ -53,10 +55,11 @@ class UsuarioDAO
         }
         
         if(res.ntuples == 1)
+            candidaturaDAO = CandidaturaDAO.new
             usuario = Usuario.new nil, res[0]["nome"], res[0]["email"], res[0]["login"], res[0]["senha"]
 
             usuario.id = res[0]["id"]
-            #usuario.candidaturas = self.getCandidaturas(usuario.id)
+            #usuario.candidaturas = candidaturaDAO.getUsuario(usuario.id)
 
             usuario
         else
@@ -71,28 +74,15 @@ class UsuarioDAO
         }
         
         if(res.ntuples == 1)
+            candidaturaDAO = CandidaturaDAO.new
             usuario = Usuario.new nil, res[0]["nome"], res[0]["email"], res[0]["login"], res[0]["senha"]
 
             usuario.id = res[0]["id"]
-            #usuario.candidaturas = self.getCandidaturas(usuario.id)
+            #usuario.candidaturas = candidaturaDAO.getUsuario(usuario.id)
 
             usuario
         else
             nil
         end
-    end
-
-    def getCandidaturas(id)
-        res = conecta{|con|
-            con.exec('SELECT * FROM candidatura WHERE idusuario = $1', [id])
-        }
-        vagaDAO = VagaDAO.new
-        lista = []
-
-        res.each {|linha|
-            vaga = vagaDAO.get(linha['idvaga'])
-            lista.push vaga
-        }
-        lista
     end
 end

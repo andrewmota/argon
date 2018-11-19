@@ -2,6 +2,7 @@ require_relative("conexao.rb")
 require_relative("vaga.rb")
 require_relative("empresaDAO.rb")
 require_relative("usuarioDAO.rb")
+require_relative("candidaturaDAO.rb")
 
 class VagaDAO
     def initialize
@@ -34,6 +35,7 @@ class VagaDAO
             con.exec('SELECT * FROM vaga')
         }
         empresaDAO = EmpresaDAO.new
+        candidaturaDAO = CandidaturaDAO.new
         lista = []
 
         res.each {|linha|
@@ -41,7 +43,7 @@ class VagaDAO
 
             vaga.id = linha["id"]
             vaga.empresa = empresaDAO.get(linha["idempresa"])
-            vaga.candidaturas = self.getCandidaturas(vaga.id)
+            #vaga.candidaturas = candidaturaDAO.getVaga(vaga.id)
 
             lista.push vaga
         }
@@ -63,11 +65,12 @@ class VagaDAO
         
         if(res.ntuples == 1)
             empresaDAO = EmpresaDAO.new
+            candidaturaDAO = CandidaturaDAO.new
 
             vaga = Vaga.new nil, res[0]["titulo"], nil, @hashNivel[res[0]["nivel"]], @hashTipoContrato[res[0]["tipoContrato"]], @hashRemoto[res[0]["remoto"]], res[0]["local"], res[0]["salario"], res[0]["descricao"]
             vaga.id = res[0]["id"]
             vaga.empresa = empresaDAO.get(res[0]["idempresa"])
-            vaga.candidaturas = self.getCandidaturas(vaga.id)
+            #vaga.candidaturas = candidaturaDAO.getVaga(vaga.id)
 
             vaga
         else
@@ -75,22 +78,9 @@ class VagaDAO
         end
     end
 
-    def getCandidaturas(id)
-        res = conecta{|con|
-            con.exec('SELECT * FROM candidatura WHERE idvaga = $1', [id])
-        }
-        usuarioDAO = UsuarioDAO.new
-        lista = []
-
-        res.each {|linha|
-            usuario = usuarioDAO.get(linha['idusuario'])
-            lista.push usuario
-        }
-        lista
-    end
-
     def filtrar(filtro, valor)
         empresaDAO = EmpresaDAO.new
+        candidaturaDAO = CandidaturaDAO.new
         lista = []
 
         case filtro
@@ -113,7 +103,27 @@ class VagaDAO
 
             vaga.id = linha["id"]
             vaga.empresa = empresaDAO.get(linha["idempresa"])
-            vaga.candidaturas = self.getCandidaturas(vaga.id)
+            #vaga.candidaturas = candidaturaDAO.getVaga(vaga.id)
+
+            lista.push vaga
+        }
+        lista
+    end
+
+    def getEmpresa(idEmpresa)
+        res = conecta{|con|
+            con.exec('SELECT * FROM vaga WHERE idempresa = $1', [idEmpresa])
+        }
+        empresaDAO = EmpresaDAO.new
+        candidaturaDAO = CandidaturaDAO.new
+        lista = []
+
+        res.each {|linha|
+            vaga = Vaga.new nil, linha["titulo"], nil, @hashNivel[linha["nivel"]], @hashTipoContrato[linha["tipoContrato"]], @hashRemoto[linha["remoto"]], linha["local"], linha["salario"], linha["descricao"]
+
+            vaga.id = linha["id"]
+            vaga.empresa = empresaDAO.get(linha["idempresa"])
+            #vaga.candidaturas = candidaturaDAO.getVaga(vaga.id)
 
             lista.push vaga
         }

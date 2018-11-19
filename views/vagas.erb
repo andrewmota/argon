@@ -1,56 +1,92 @@
 <div class="row">
-    <% if @vagas.count > 0 %>
-        <% for vaga in @vagas%>
-        <div class="col-xl-12 col-lg-12 my-2">
-            <div class="card card-stats mb-4 mb-xl-0">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col">
-                            <a href="/vaga/<%= vaga.id %>">
-                                <span class="h2 font-weight-bold mb-0"><%= vaga.titulo %></span>
-                            </a>
-                        </div>
-                        <div class="col-auto">
-                            <% if !@usuario or @empresa %>
-                            <a href="#" class="btn btn-primary btn-sm disabled" role="button" aria-pressed="true">
-                                <span class="btn-inner--text">Quero me candidatar</span>
-                            </a>
-                            <% else %>
-                            <a href="/vaga/candidatar/<%= vaga.id %>" class="btn btn-primary btn-sm active" role="button" aria-pressed="true">
-                                <span class="btn-inner--text">Quero me candidatar</span>
-                            </a>
-                            <% end %>
-                        </div>
-                    </div>
-                    <p class="mt-3 mb-0 text-muted text-sm">
-                        <span class="mr-2"><i class="fas fa-users"></i> <%= vaga.candidaturas.count %></span>
-                        <span class="mr-2"><i class="fas fa-briefcase"></i> <%= vaga.empresa.nome %></span>
-                        <span class="mr-2"><i class="fas fa-map-marker-alt"></i> <%= vaga.local %></span>
-                        <span class="mr-2"><i class="fas fa-globe"></i> <%= vaga.remoto %></span>
-                        <span class="mr-2"><i class="fas fa-building"></i> <%= vaga.empresa.tipo %></span>
-                        <% if vaga.salario %>
-                            <span class="mr-2"><i class="far fa-money-bill-alt"></i> R$ <%= vaga.salario %></span>
-                        <% else %>
-                            <span class="mr-2"><i class="far fa-money-bill-alt"></i> R$ a combinar</span>
+	<div class="col-9 ml-auto mr-auto">
+		<div class="card shadow">
+			<div class="card-header border-0">
+				<div class="row">
+					<div class="col-6">
+						<h3 class="mb-0"><%= @titulo %></h3>
+					</div>
+					<div class="col-6 text-right">
+						<a href="/vaga/cadastrar">
+							<i class="fas fa-plus text-default"></i>
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="table-responsive">
+				<table class="table align-items-center table-flush">
+					<thead class="thead-light">
+						<tr>
+							<th scope="col">Título</th>
+							<th scope="col">Nível</th>
+							<th scope="col">Tipo contrato</th>
+							<th scope="col">Remoto</th>
+							<th scope="col">Local</th>
+                            <th scope="col">Salário</th>
+							<th scope="col"></th>
+						</tr>
+					</thead>
+					<tbody>
+                    <% if @vagas.count > 0 %>
+                        <% for vaga in @vagas %>
+						<tr>
+							<th scope="row">
+								<div class="align-items-center">
+                                    <span class="mb-0 text-sm"><%= vaga.titulo %></span>
+								</div>
+							</th>
+                            <td>
+								<span class="text-sm">
+									<%= vaga.nivel %>
+								</span>
+							</td>
+							<td>
+								<span class="text-sm">
+									<%= vaga.tipoContrato %>
+								</span>
+							</td>
+							<td>
+								<span class="text-sm">
+									<%= vaga.remoto %>
+								</span>
+							</td>
+							<td>
+								<span class="text-sm">
+									<%= vaga.local %>
+								</span>
+							</td>
+                            <td>
+                                <span class="text-sm">
+									R$ <%= vaga.salario %>
+								</span>
+							</td>
+							<td class="text-right">
+								<div class="dropdown" style="z-index: 10001">
+									<a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										<i class="fas fa-ellipsis-v"></i>
+									</a>
+									<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+										<a class="dropdown-item" href="/vaga/editar/<%= vaga.id %>">Editar</a>
+										<a class="dropdown-item" href="/vaga/deletar/<%= vaga.id %>">Deletar</a>
+									</div>
+								</div>
+							</td>
+						</tr>
                         <% end %>
-                        <span class="mr-2"><i class="far fa-chart-bar"></i> <%= vaga.nivel %></span>
-                        <span class="mr-2"><i class="far fa-file-alt"></i> <%= vaga.tipoContrato %></span>
-                    </p>
-                </div>
-            </div>
-        </div>
-        <% end %>
-    <% else %>
-    <div class="col-xl-12 col-lg-12 my-2">
-        <div class="card card-stats mb-4 mb-xl-0">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col text-center">
-                        <span class="h3 font-weight-bold mb-0">Nenhuma vaga cadastrada!</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <% end %>
+                    <% else %>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td class="text-right">
+                                <span class="text-lg">
+									Nenhuma vaga cadastrada!
+								</span>
+                            </td>
+                        </tr>
+                    <% end %>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
 </div>

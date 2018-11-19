@@ -29,4 +29,8 @@ class VagaController
     def filtrar(filtro, valor)
         @dao.filtrar(filtro, valor)
     end
+
+    def getEmpresa(id)
+        @dao.getEmpresa(id)
+    end
 end

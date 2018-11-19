@@ -2,6 +2,7 @@ require 'sinatra'
 require_relative("controllers/usuarioController.rb")
 require_relative("controllers/empresaController.rb")
 require_relative("controllers/vagaController.rb")
+require_relative("controllers/candidaturaController.rb")
 
 helpers do
     def usuarioController 
@@ -13,6 +14,9 @@ helpers do
     def vagaController 
         VagaController.new
     end
+    def candidaturaController 
+        CandidaturaController.new
+    end
 end
 
 hash = {
@@ -23,12 +27,7 @@ hash = {
     }
 enable :sessions
 
-before "/usuario" do
-    if !session[:usuario] then
-        redirect "/login"
-    end
-end
-
+#Rotas: Inícios
 get '/' do
     redirect "/vagas"
 end
@@ -51,12 +50,15 @@ get '/vagas' do
     end
 
     @titulo = "Vagas de emprego"
-    erb :vagas, :layout => :base
+    erb :index, :layout => :base
 end
 
-#Rotas Manutenção: Usuário/Empresa
-
+#Rotas: Cadastro/Login/Logout
 get '/cadastro' do
+    if session[:usuario] or session[:empresa] then
+        redirect "/vagas"
+    end
+
     @titulo = "Cadastrar"
     erb :cadastro, :layout => :baseForm
 end
@@ -74,6 +76,10 @@ post '/cadastro' do
 end
 
 get '/login' do
+    if session[:usuario] or session[:empresa] then
+        redirect "/vagas"
+    end
+
     @titulo = "Login"
     erb :login, :layout => :baseForm
 end
@@ -103,8 +109,30 @@ get '/logout' do
     redirect "/"
 end
 
-get '/usuario/:id' do
-    @usuario = usuarioController.get(params[:id])
-    @postagens = postagemController.listUser(params[:id])
-    erb :perfil, :layout => :base
+#Rotas: Usuário
+before '/usuario/*' do
+    if session[:empresa] or !session[:usuario] then
+        redirect "/login"
+    end
+end
+
+get '/usuario/candidaturas' do
+    @titulo = "Candidaturas"
+    @usuario = session[:usuario]
+    @candidaturas = candidaturaController.getUsuario(@usuario.id)
+    erb :candidaturas, :layout => :baseAdmin
+end
+
+#Rotas: Empresa
+before '/empresa/*' do
+    if !session[:empresa] or session[:usuario] then
+        redirect "/login"
+    end
+end
+
+get '/empresa/vagas' do
+    @titulo = "Vagas anunciadas"
+    @empresa = session[:empresa]
+    @vagas = vagaController.getEmpresa(@empresa.id)
+    erb :vagas, :layout => :baseAdmin
 end
