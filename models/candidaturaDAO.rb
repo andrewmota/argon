@@ -4,14 +4,17 @@ require_relative("vagaDAO.rb")
 require_relative("usuarioDAO.rb")
 
 class CandidaturaDAO
+    def initialize
+        @hash = {"R" => "Revisão", "N" => "Negada", "E" => "Entrevista"}
+    end
     
     def save(candidatura)
-        array = [candidatura.usuario.id, usuario.vaga.id];
+        array = [candidatura.usuario.id, candidatura.vaga.id, candidatura.status];
         
-        if usuario.id.nil?
-            query = 'INSERT INTO candidatura (idusuario, idvaga) VALUES ($1, $2) RETURNING id'
+        if candidatura.id.nil?
+            query = 'INSERT INTO candidatura (idusuario, idvaga, status) VALUES ($1, $2, $3) RETURNING id'
         else
-            query = 'UPDATE candidatura SET idusuario = $2, idvaga = $3 WHERE id = $1'
+            query = 'UPDATE candidatura SET idusuario = $2, idvaga = $3, status = $4 WHERE id = $1'
             array<<candidatura.id
         end
         
@@ -37,6 +40,7 @@ class CandidaturaDAO
             candidatura.id = linha["id"]
             candidatura.usuario = usuarioDAO.get(linha["idusuario"])
             candidatura.vaga = vagaDAO.get(linha["idvaga"])
+            candidatura.status = @hash[linha["status"]]
 
             lista.push candidatura
         }
@@ -64,6 +68,7 @@ class CandidaturaDAO
             candidatura.id = res[0]["id"]
             candidatura.usuario = usuarioDAO.get(res[0]["idusuario"])
             candidatura.vaga = vagaDAO.get(res[0]["idvaga"])
+            candidatura.status = @hash[res[0]["status"]]
 
             candidatura
         else
@@ -84,6 +89,7 @@ class CandidaturaDAO
             candidatura.id = linha["id"]
             candidatura.usuario = usuarioDAO.get(linha["idusuario"])
             candidatura.vaga = vagaDAO.get(linha["idvaga"])
+            candidatura.status = @hash[linha["status"]]
 
             lista.push candidatura
         }
@@ -103,9 +109,34 @@ class CandidaturaDAO
             candidatura.id = linha["id"]
             candidatura.usuario = usuarioDAO.get(linha["idusuario"])
             candidatura.vaga = vagaDAO.get(linha["idvaga"])
+            candidatura.status = @hash[linha["status"]]
 
             lista.push candidatura
         }
         lista
     end
+
+    def getContagemVaga(idVaga)
+        res = conecta{|con|
+            con.exec('SELECT count(*) as contagem FROM candidatura WHERE idvaga = $1', [idVaga])
+        }
+
+        if(res.ntuples == 1)
+            res[0]["contagem"]
+        else
+            nil
+        end
+    end
+
+    def getArrayVagasUsuario(idUsuario)
+        res = conecta{|con|
+            con.exec('SELECT * FROM candidatura WHERE idusuario = $1', [idUsuario])
+        }
+        lista = []
+
+        res.each {|linha|
+            lista.push linha["idvaga"]
+        }
+        lista
+    end 
 end

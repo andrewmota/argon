@@ -9,11 +9,13 @@
 					<thead class="thead-light">
 						<tr>
 							<th scope="col">Título</th>
+							<% if @empresa %>
+								<th scope="col">Usuário</th>
+							<% end %>
 							<th scope="col">Nível</th>
-							<th scope="col">Tipo contrato</th>
-							<th scope="col">Remoto</th>
 							<th scope="col">Local</th>
 							<th scope="col">Salário</th>
+							<th scope="col">Status</th>
 							<th scope="col"></th>
 						</tr>
 					</thead>
@@ -28,19 +30,18 @@
 									</a>
 								</div>
 							</th>
+							<% if @empresa %>
+							<th scope="row">
+								<div class="align-items-center">
+									<a href="/usuario/<%= candidatura.usuario.id %>">
+										<span class="mb-0 text-sm"><%= candidatura.usuario.nome %></span>
+									</a>
+								</div>
+							</th>
+							<% end %>
 							<td>
 								<span class="text-sm">
 									<%= candidatura.vaga.nivel %>
-								</span>
-							</td>
-							<td>
-								<span class="text-sm">
-									<%= candidatura.vaga.tipoContrato %>
-								</span>
-							</td>
-							<td>
-								<span class="text-sm">
-									<%= candidatura.vaga.remoto %>
 								</span>
 							</td>
 							<td>
@@ -50,7 +51,12 @@
 							</td>
 							<td>
 								<span class="text-sm">
-									<%= candidatura.vaga.salario %>
+									R$ <%= candidatura.vaga.salario %>
+								</span>
+							</td>
+							<td>
+								<span class="text-sm">
+									<%= candidatura.status %>
 								</span>
 							</td>
 							<td class="text-right">
@@ -59,7 +65,11 @@
 										<i class="fas fa-ellipsis-v"></i>
 									</a>
 									<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+									<% if @empresa %>
+										<a class="dropdown-item" href="/candidatura/editar/<%= candidatura.id %>">Editar</a>
+									<% else %>
 										<a class="dropdown-item disabled" href="#">Editar</a>
+									<% end %>
 										<a class="dropdown-item" href="/candidatura/deletar/<%= candidatura.id %>">Deletar</a>
 									</div>
 								</div>

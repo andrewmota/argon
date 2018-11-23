@@ -4,6 +4,7 @@ CREATE TYPE nivel AS ENUM ('J', 'P', 'S');
 CREATE TYPE "tipoContrato" AS ENUM ('E', 'C', 'P');
 CREATE TYPE "tipoEmpresa" AS ENUM ('S', 'P', 'M', 'G');
 CREATE TYPE remoto AS ENUM ('S', 'N');
+CREATE TYPE status AS ENUM ('R', 'N', 'E'); #R=Revisao, N=Negado, E=Entrevista
 
 CREATE TABLE usuario(
 	id serial,
@@ -41,12 +42,19 @@ CREATE TABLE candidatura(
 	id serial,
 	idusuario int NOT NULL,
 	idvaga int NOT NULL,
-	CONSTRAINT "candidaturaPK" PRIMARY KEY (id)
+	status status NOT NULL,
+	CONSTRAINT "candidaturaPK" PRIMARY KEY (id),
+	CONSTRAINT "candidaturaFKusuario" FOREIGN KEY (idusuario) REFERENCES usuario(id)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE,
+	CONSTRAINT "candidaturaFKvaga" FOREIGN KEY (idvaga) REFERENCES vaga(id)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE
 );
 
 CREATE TABLE habilidade(
 	id serial,
-	nome varchar(50) NOT NULL,
+	nome text NOT NULL,
 	CONSTRAINT "habilidadePK" PRIMARY KEY (id)
 );
 

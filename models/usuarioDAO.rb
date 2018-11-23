@@ -10,7 +10,7 @@ class UsuarioDAO
             query = 'INSERT INTO usuario (nome, email, login, senha) VALUES ($1, $2, $3, $4) RETURNING id'
         else
             query = 'UPDATE usuario SET nome = $2, email = $3, login = $4, senha = $5 WHERE id = $1'
-            array<<usuario.id
+            array = [usuario.id, usuario.nome, usuario.email, usuario.login, usuario.senha];
         end
         
         res = conecta{|con|         
@@ -33,7 +33,6 @@ class UsuarioDAO
             usuario = Usuario.new nil, linha["nome"], linha["email"], linha["login"], linha["senha"]
 
             usuario.id = linha["id"]
-            #usuario.candidaturas = candidaturaDAO.getUsuario(usuario.id)
 
             lista.push usuario
         }
@@ -59,7 +58,6 @@ class UsuarioDAO
             usuario = Usuario.new nil, res[0]["nome"], res[0]["email"], res[0]["login"], res[0]["senha"]
 
             usuario.id = res[0]["id"]
-            #usuario.candidaturas = candidaturaDAO.getUsuario(usuario.id)
 
             usuario
         else
@@ -78,7 +76,6 @@ class UsuarioDAO
             usuario = Usuario.new nil, res[0]["nome"], res[0]["email"], res[0]["login"], res[0]["senha"]
 
             usuario.id = res[0]["id"]
-            #usuario.candidaturas = candidaturaDAO.getUsuario(usuario.id)
 
             usuario
         else

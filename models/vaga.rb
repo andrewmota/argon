@@ -1,7 +1,7 @@
 class Vaga
-	attr_accessor :id, :titulo, :empresa, :nivel, :tipoContrato, :remoto, :local, :salario, :descricao, :candidaturas
+	attr_accessor :id, :titulo, :empresa, :nivel, :tipoContrato, :remoto, :local, :salario, :descricao, :nroCandidaturas
 
-	def initialize id = nil, titulo = nil, empresa = nil, nivel = nil, tipoContrato = nil, remoto = nil, local = nil, salario = nil, descricao = nil
+	def initialize id = nil, titulo = nil, empresa = nil, nivel = nil, tipoContrato = nil, remoto = nil, local = nil, salario = nil, descricao = nil, nroCandidaturas = 0
 		@id = id if id
 		@titulo = titulo if titulo
 		@empresa = empresa if empresa
@@ -11,6 +11,6 @@ class Vaga
 		@local = local if local
 		@salario = salario if salario
 		@descricao = descricao if descricao
-		@candidaturas = candidaturas if candidaturas
+		@nroCandidaturas = nroCandidaturas if nroCandidaturas
 	end
 end

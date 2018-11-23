@@ -3,9 +3,10 @@
 		<div class="card bg-secondary shadow border-0">
 			<div class="card-body px-lg-5 pt-lg-5">
 				<div class="text-center text-muted mb-4">
-					<h2>Cadastrar vaga</h2>
+					<h2>Alterar vaga</h2>
 				</div>
 				<form role="form" method="post" action="/vaga/cadastro">
+					<input type="hidden" name="id" value="<%= @vaga.id %>" >
                     <div class="form-group">
 						<div class="input-group input-group-alternative mb-3">
 							<div class="input-group-prepend">
@@ -13,30 +14,42 @@
 									<i class="fas fa-briefcase"></i>
 								</span>
 							</div>
-							<input class="form-control" placeholder="Título Vaga" type="text" name="titulo" required>
+							<input class="form-control" placeholder="Título Vaga" type="text" name="titulo" value="<%= @vaga.titulo %>" required>
 						</div>
 					</div>
 					<div class="form-group">
                         <select class="custom-select" name="nivel" required>
-							<option selected disabled>Nível</option>
+							<option disabled>Nível</option>
 							<% @opcoes['nivel'].to_hash().each do |chave, valor| %>
-								<option value="<%= chave %>"><%= valor %></option>
+								<% if @vaga.nivel == chave %>
+									<option value="<%= chave %>" selected><%= valor %></option>
+								<% else %>
+									<option value="<%= chave %>"><%= valor %></option>
+								<% end %>
 							<% end %>
 						</select>
                     </div>
 					<div class="form-group">
                         <select class="custom-select" name="tipoContrato" required>
-							<option selected disabled>Tipo Contrato</option>
+							<option disabled>Tipo Contrato</option>
 							<% @opcoes['tipoContrato'].to_hash().each do |chave, valor| %>
-								<option value="<%= chave %>"><%= valor %></option>
+								<% if @vaga.tipoContrato == valor %>
+									<option value="<%= chave %>" selected><%= valor %></option>
+								<% else %>
+									<option value="<%= chave %>"><%= valor %></option>
+								<% end %>
 							<% end %>
 						</select>
                     </div>
 					<div class="form-group">
                         <select class="custom-select" name="remoto" required>
-							<option selected disabled>Trabalho remoto?</option>
+							<option disabled>Trabalho remoto?</option>
 							<% @opcoes['remoto'].to_hash().each do |chave, valor| %>
-								<option value="<%= chave %>"><%= valor %></option>
+								<% if @vaga.remoto == valor %>
+									<option value="<%= chave %>" selected><%= valor %></option>
+								<% else %>
+									<option value="<%= chave %>"><%= valor %></option>
+								<% end %>
 							<% end %>
 						</select>
                     </div>
@@ -47,7 +60,7 @@
 									<i class="fas fa-map-marker-alt"></i>
 								</span>
 							</div>
-							<input class="form-control" placeholder="Local de trabalho" type="text" name="local">
+							<input class="form-control" placeholder="Local de trabalho" type="text" value="<%= @vaga.local %>" name="local">
 						</div>
 					</div>
 					<div class="form-group">
@@ -57,14 +70,14 @@
 									<i class="fas fa-money-bill"></i>
 								</span>
 							</div>
-							<input class="form-control" placeholder="Salário" type="number" name="salario" required>
+							<input class="form-control" placeholder="Salário" type="number" name="salario" value="<%= @vaga.salario %>" required>
 						</div>
 					</div>
 					<div class="form-group">
-                        <textarea class="form-control form-control-alternative" rows="4" placeholder="Descrição vaga" name="descricao"></textarea>
+                        <textarea class="form-control form-control-alternative" rows="4" placeholder="Descrição vaga" name="descricao"><%= @vaga.descricao %></textarea>
                     </div>
 					<div class="text-center">
-						<button type="submit" class="btn btn-default mt-4">Cadastrar vaga</button>
+						<button type="submit" class="btn btn-default mt-4">Alterar vaga</button>
 					</div>
 				</form>
 			</div>

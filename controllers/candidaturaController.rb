@@ -7,11 +7,11 @@ class CandidaturaController
         @dao = CandidaturaDAO.new()
     end
     
-    def save(params, usuario)
-        candidatura = Candidatura.new(nil, usuario, params['vaga'])
-        candidatura.id = params['id'] if params['id']
+    def save(vaga, usuario)
+        candidatura = Candidatura.new(nil, usuario, vaga, "R")
+        #candidatura.id = params['id'] if params['id']
 
-        @dao.save(vaga)
+        @dao.save(candidatura)
     end
 
     def list
@@ -25,12 +25,16 @@ class CandidaturaController
     def get(id)
         @dao.get(id)
     end
-
-    def filtrar(filtro, valor)
-        @dao.filtrar(filtro, valor)
+    
+    def getVaga(id)
+        @dao.getVaga(id)
     end
 
     def getUsuario(id)
         @dao.getUsuario(id)
+    end
+
+    def getArrayVagasUsuario(id)
+        @dao.getArrayVagasUsuario(id)
     end
 end

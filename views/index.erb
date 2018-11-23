@@ -1,6 +1,6 @@
 <div class="row">
     <% if @vagas.count > 0 %>
-        <% for vaga in @vagas%>
+        <% for vaga in @vagas %>
         <div class="col-xl-12 col-lg-12 my-2">
             <div class="card card-stats mb-4 mb-xl-0">
                 <div class="card-body">
@@ -11,19 +11,19 @@
                             </a>
                         </div>
                         <div class="col-auto">
-                            <% if !@usuario or @empresa %>
+                        <% if !@usuario or @empresa or @candidaturas.include? vaga.id %>
                             <a href="#" class="btn btn-primary btn-sm disabled" role="button" aria-pressed="true">
-                                <span class="btn-inner--text">Quero me candidatar</span>
+                                <span class="btn-inner--text">Não é possível se candidatar</span>
                             </a>
-                            <% else %>
+                        <% else %>
                             <a href="/vaga/candidatar/<%= vaga.id %>" class="btn btn-primary btn-sm active" role="button" aria-pressed="true">
                                 <span class="btn-inner--text">Quero me candidatar</span>
                             </a>
-                            <% end %>
+                        <% end %>
                         </div>
                     </div>
                     <p class="mt-3 mb-0 text-muted text-sm">
-                        <!--<span class="mr-2"><i class="fas fa-users"></i> </span>-->
+                        <span class="mr-2"><i class="fas fa-users"></i> <%= vaga.nroCandidaturas %></span>
                         <span class="mr-2"><i class="fas fa-briefcase"></i> <%= vaga.empresa.nome %></span>
                         <span class="mr-2"><i class="fas fa-map-marker-alt"></i> <%= vaga.local %></span>
                         <span class="mr-2"><i class="fas fa-globe"></i> <%= vaga.remoto %></span>

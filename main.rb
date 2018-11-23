@@ -20,11 +20,11 @@ helpers do
 end
 
 hash = {
-        "nivel" => {"J" => "Júnior", "P" => "Pleno", "S" => "Sênior"},
-        "tipoContrato" => {"E" => "Estágio", "C" => "CLT", "P" => "PJ"},
-        "remoto" => {"S" => "Remoto", "N" => "Presencial"},
-        "tipo" => {"S" => "StartUp", "P" => "Pequena", "M" => "Média", "G" => "Grande"}
-    }
+    "nivel" => {"J" => "Júnior", "P" => "Pleno", "S" => "Sênior"},
+    "tipoContrato" => {"E" => "Estágio", "C" => "CLT", "P" => "PJ"},
+    "remoto" => {"S" => "Sim", "N" => "Não"},
+    "tipo" => {"S" => "StartUp", "P" => "Pequena", "M" => "Média", "G" => "Grande"}
+}
 enable :sessions
 
 #Rotas: Inícios
@@ -42,9 +42,11 @@ get '/vagas' do
         @vagas = vagaController.list()
         @subtitulo = "Vagas para Programadores e Desenvolvedores"
     end
-
+    
+    @candidaturas = nil
     if !session[:usuario].nil? then
         @usuario = session[:usuario]
+        @candidaturas = candidaturaController.getArrayVagasUsuario(@usuario.id)
     elsif !session[:empresa].nil? then
         @empresa = session[:empresa]
     end
@@ -155,4 +157,67 @@ post '/vaga/cadastro' do
     empresa = session[:empresa]
     vagaController.save(params, empresa)
     redirect "/vagas"
+end
+
+get '/vaga/editar/:id' do
+    if !session[:empresa] or session[:usuario] then
+        redirect "/login"
+    end
+
+    @vaga = vagaController.get(params['id'])
+    @titulo = "Alterar Vaga"
+    @opcoes = hash
+    erb :alterarVaga, :layout => :baseForm    
+end
+
+get '/vaga/deletar/:id' do
+    if !session[:empresa] or session[:usuario] then
+        redirect "/login"
+    end
+
+    vaga = vagaController.get(params['id'])
+    empresa = session[:empresa]
+    if vaga.empresa.id === empresa.id
+        vagaController.delete(params['id'])
+        redirect "/empresa/vagas"
+    else
+        redirect "/vagas"
+    end
+end
+
+get '/vaga/candidatar/:vaga' do
+    if session[:empresa] or !session[:usuario] then
+        redirect "/login"
+    end
+
+    usuario = session[:usuario]
+    list = candidaturaController.getUsuario(usuario.id)
+    if !list.include? params['vaga']
+        vaga = vagaController.get(params['vaga'])
+        candidaturaController.save(vaga, usuario)
+    end
+
+    redirect "/vagas"
+end
+
+get '/vaga/candidaturas/:vaga' do
+    if !session[:empresa] or session[:usuario] then
+        redirect "/login"
+    end
+
+    @empresa = session[:empresa]
+    @titulo = "Candidaturas para a vaga: " + vagaController.get(params["vaga"]).titulo
+    @candidaturas = candidaturaController.getVaga(params["vaga"])
+    erb :candidaturas, :layout => :baseAdmin
+end
+
+get '/vaga/:id' do
+    if session[:usuario]
+        @usuario = session[:usuario]
+        @candidaturas = candidaturaController.getArrayVagasUsuario(@usuario.id)
+    end
+
+    @vaga = vagaController.get(params["id"])
+    @titulo = @vaga.titulo
+    erb :vaga, :layout => :baseAdmin
 end
