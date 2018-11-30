@@ -112,26 +112,48 @@ get '/logout' do
 end
 
 #Rotas: Usuário
-before '/usuario/*' do
-    if session[:empresa] or !session[:usuario] then
+get '/usuario/candidaturas' do
+    if !session[:usuario] or session[:empresa] then
         redirect "/login"
     end
-end
 
-get '/usuario/candidaturas' do
     @titulo = "Candidaturas"
     @usuario = session[:usuario]
     @candidaturas = candidaturaController.getUsuario(@usuario.id)
     erb :candidaturas, :layout => :baseAdmin
 end
 
-#Rotas: Empresa
-before '/empresa/*' do
-    if !session[:empresa] or session[:usuario] then
-        redirect "/login"
+get '/usuario/:id' do
+    @candidaturas = nil
+    if !session[:usuario].nil? then
+        @usuario = session[:usuario]
+    elsif !session[:empresa].nil? then
+        @empresa = session[:empresa]
     end
+
+    @usuarioPerfil = usuarioController.get(params['id'])
+
+    if !@usuario.nil? and @usuarioPerfil.id == @usuario.id
+        redirect "/usuario"
+    end
+
+    @titulo = "Perfil " + @usuarioPerfil.nome
+    @candidaturas = candidaturaController.getUsuario(@usuarioPerfil.id)
+    erb :usuario, :layout => :baseAdmin
 end
 
+get '/usuario' do
+    if !session[:usuario] or session[:empresa] then
+        redirect "/login"
+    end
+
+    @usuario = session[:usuario]
+    @titulo = @usuario.nome
+    @candidaturas = candidaturaController.getUsuario(@usuario.id)
+    erb :perfil, :layout => :baseAdmin
+end
+
+#Rotas: Empresa
 get '/empresa/vagas' do
     @titulo = "Vagas anunciadas"
     @empresa = session[:empresa]

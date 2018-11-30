@@ -8,7 +8,11 @@ class UsuarioController
     end
     
     def save(params)
-        passwordEncrypted = @senha = Digest::MD5.hexdigest params['senha']
+        if !params['id']
+            passwordEncrypted = Digest::MD5.hexdigest params['senha']
+        else
+            passwordEncrypted = params['senha']
+        end
         usuario = Usuario.new(nil, params['nome'], params['email'], params['login'], passwordEncrypted)
         usuario.id = params['id'] if params['id']
         @dao.save(usuario)
@@ -24,11 +28,6 @@ class UsuarioController
 
     def get(id)
         @dao.get(id)
-    end
-
-    def post(params, usuario)
-        postagemController = PostagemController.new()
-        postagemController.save(params, usuario)
     end
 
     def verifyUser(params)

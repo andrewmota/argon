@@ -4,7 +4,7 @@ CREATE TYPE nivel AS ENUM ('J', 'P', 'S');
 CREATE TYPE "tipoContrato" AS ENUM ('E', 'C', 'P');
 CREATE TYPE "tipoEmpresa" AS ENUM ('S', 'P', 'M', 'G');
 CREATE TYPE remoto AS ENUM ('S', 'N');
-CREATE TYPE status AS ENUM ('R', 'N', 'E'); #R=Revisao, N=Negado, E=Entrevista
+CREATE TYPE status AS ENUM ('R', 'N', 'E');
 
 CREATE TABLE usuario(
 	id serial,
