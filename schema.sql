@@ -35,7 +35,10 @@ CREATE TABLE vaga(
 	local text NOT NULL,
 	salario numeric,
 	descricao text,
-	CONSTRAINT "vagaPK" PRIMARY KEY (id)
+	CONSTRAINT "vagaPK" PRIMARY KEY (id),
+	CONSTRAINT "vagaFKempresa" FOREIGN KEY (idempresa) REFERENCES empresa(id)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE,
 );
 
 CREATE TABLE candidatura(

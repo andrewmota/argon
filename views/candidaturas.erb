@@ -8,11 +8,15 @@
 				<table class="table align-items-center table-flush">
 					<thead class="thead-light">
 						<tr>
-							<th scope="col">Título</th>
+							<% if @usuario %>
+								<th scope="col">Título</th>
+							<% end %>
 							<% if @empresa %>
 								<th scope="col">Usuário</th>
 							<% end %>
-							<th scope="col">Nível</th>
+							<% if @usuario %>
+								<th scope="col">Nível</th>
+							<% end %>
 							<th scope="col">Local</th>
 							<th scope="col">Salário</th>
 							<th scope="col">Status</th>
@@ -23,6 +27,7 @@
 					<% if @candidaturas.count > 0 %>
 						<% for candidatura in @candidaturas %>
 						<tr>
+							<% if @usuario %>
 							<th scope="row">
 								<div class="align-items-center">
 									<a href="/vaga/<%= candidatura.vaga.id %>">
@@ -30,6 +35,7 @@
 									</a>
 								</div>
 							</th>
+							<% end %>
 							<% if @empresa %>
 							<th scope="row">
 								<div class="align-items-center">
@@ -39,11 +45,13 @@
 								</div>
 							</th>
 							<% end %>
+							<% if @usuario %>
 							<td>
 								<span class="text-sm">
 									<%= candidatura.vaga.nivel %>
 								</span>
 							</td>
+							<% end %>
 							<td>
 								<span class="text-sm">
 									<%= candidatura.vaga.local %>

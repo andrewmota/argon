@@ -1,5 +1,6 @@
 require_relative("conexao.rb")
 require_relative("usuario.rb")
+require_relative("habilidade.rb")
 require_relative("candidaturaDAO.rb")
 
 class UsuarioDAO

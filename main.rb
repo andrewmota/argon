@@ -3,6 +3,7 @@ require_relative("controllers/usuarioController.rb")
 require_relative("controllers/empresaController.rb")
 require_relative("controllers/vagaController.rb")
 require_relative("controllers/candidaturaController.rb")
+require_relative("controllers/habilidadeController.rb")
 
 helpers do
     def usuarioController 
@@ -16,6 +17,9 @@ helpers do
     end
     def candidaturaController 
         CandidaturaController.new
+    end
+    def habilidadeController 
+        HabilidadeController.new
     end
 end
 
@@ -72,6 +76,7 @@ post '/cadastro' do
     else
         usuario = usuarioController.save(params)
         session[:usuario] = usuario
+        redirect "/habilidades"
     end
 
     redirect "/vagas"
@@ -139,6 +144,7 @@ get '/usuario/:id' do
 
     @titulo = "Perfil " + @usuarioPerfil.nome
     @candidaturas = candidaturaController.getUsuario(@usuarioPerfil.id)
+    @habilidades = habilidadeController.getUsuario(@usuarioPerfil)
     erb :usuario, :layout => :baseAdmin
 end
 
@@ -150,7 +156,28 @@ get '/usuario' do
     @usuario = session[:usuario]
     @titulo = @usuario.nome
     @candidaturas = candidaturaController.getUsuario(@usuario.id)
+    @habilidades = habilidadeController.getUsuario(@usuario)
     erb :perfil, :layout => :baseAdmin
+end
+
+get '/habilidades' do
+    if !session[:usuario] or session[:empresa] then
+        redirect "/login"
+    end
+
+    @usuario = session[:usuario]
+    @habilidades = habilidadeController.getUsuario(@usuario)
+    @titulo = "Selecione suas habilidades"
+    erb :habilidades, :layout => :baseAdmin
+end 
+
+post '/habilidades/cadastro' do
+    habilidade = habilidadeController.save(params)
+    habilidadeController.saveUsuario(params, habilidade)
+end
+
+post '/habilidades/deletar' do
+    habilidade = habilidadeController.deleteUsuario(params)
 end
 
 #Rotas: Empresa

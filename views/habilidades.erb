@@ -1,0 +1,97 @@
+<div class="row">
+    <div class="col-xl-8 ml-auto mr-auto">
+        <div class="card bg-secondary shadow">
+            <div class="card-header bg-white border-0">
+                <div class="row align-items-center">
+                    <div class="col-12">
+                        <h4 class="mb-0">Informe suas habilidades e indique quanto tempo de experiência você possui em cada uma</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <input name="idUsuario" type="hidden" value="<%= @usuario.id %>" disabled>
+                <div class="pl-lg-4">
+                    <div class="row habilidade">
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <input type="text" class="form-control form-control-alternative" name="nome" placeholder="Habilidade" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="col-lg-7">
+                            <div style="margin-top: 2.5%;" class="row ml-2">
+                                <div class="custom-control custom-radio col-md-2">
+                                    <input name="tempo" class="custom-control-input" id="0-1" value="0-1" type="radio" checked="" autocomplete="off">
+                                    <label class="custom-control-label" for="0-1">0-1</label>
+                                </div> 
+                                <div class="custom-control custom-radio col-md-2">
+                                    <input name="tempo" class="custom-control-input" id="1-2" value="1-2" type="radio" autocomplete="off">
+                                    <label class="custom-control-label" for="1-2">1-2</label>
+                                </div>
+                                <div class="custom-control custom-radio col-md-2">
+                                    <input name="tempo" class="custom-control-input" id="2-3" value="2-3" type="radio" autocomplete="off">
+                                    <label class="custom-control-label" for="2-3">2-3</label>
+                                </div> 
+                                <div class="custom-control custom-radio col-md-2">
+                                    <input name="tempo" class="custom-control-input" id="3-4" value="3-4" type="radio" autocomplete="off">
+                                    <label class="custom-control-label" for="3-4">3-4</label>
+                                </div> 
+                                <div class="custom-control custom-radio col-md-2">
+                                    <input name="tempo" class="custom-control-input" id="4-5" value="4-5" type="radio" autocomplete="off">
+                                    <label class="custom-control-label" for="4-5">4-5</label>
+                                </div> 
+                                <div class="custom-control custom-radio col-md-2">
+                                    <input name="tempo" class="custom-control-input" id="5+" value="5+" type="radio" autocomplete="off">
+                                    <label class="custom-control-label" for="5+">5+</label>
+                                </div> 
+                            </div> 
+                        </div>
+                        <a style="margin-top: 1.5%;" href="javascript:void(0)" class="adicionaHabilidade">
+                            <i class="fas fa-check"></i>
+                        </a>
+                    </div>
+                    <hr class="mb-3 mt-0">
+                    <% if @habilidades.count > 0 %>
+                        <% @habilidades.each do |habilidade, tempo| %>
+                        <div class="row habilidade">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <input name="idHabilidade" type="hidden" value="<%= habilidade.id %>" disabled>
+                                    <input type="text" class="form-control form-control-alternative" name="nome" value="<%= habilidade.nome %>" placeholder="Habilidade" disabled>
+                                </div>
+                            </div>
+                            <div class="col-lg-7">
+                                <div style="margin-top: 2.5%;" class="row ml-2">
+                                <%  arrayTempos = ['0-1', '1-2', '2-3', '3-4', '4-5', '5+'] 
+                                    for tempoArray in arrayTempos
+                                        if tempoArray == tempo.to_s %>
+                                            <div class="custom-control custom-radio col-md-2">
+                                                <input name="tempo**<%= habilidade.id %>" class="custom-control-input" id="<%= tempoArray %>**<%= habilidade.id %>" value="<%= tempoArray %>" type="radio" checked="" disabled>
+                                                <label class="custom-control-label" for="<%= tempoArray %>**<%= habilidade.id %>"><%= tempoArray %></label>
+                                            </div> 
+                                        <% else %>
+                                            <div class="custom-control custom-radio col-md-2">
+                                                <input name="tempo**<%= habilidade.id %>" class="custom-control-input" id="<%= tempoArray %>**<%= habilidade.id %>" value="<%= tempoArray %>" type="radio" disabled>
+                                                <label class="custom-control-label" for="<%= tempoArray %>**<%= habilidade.id %>"><%= tempoArray %></label>
+                                            </div> 
+                                        <% end %>
+                                    <% end %>
+                                </div> 
+                            </div>
+                            <a style="margin-top: 1.5%;" href="javascript:void(0)" class="removeHabilidade">
+                                <i class="fas fa-times"></i>
+                            </a>
+                        </div>
+                        <% end %>
+                    <% end %>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-12 text-center">
+                <a href="/" class="text-light">
+                    <h3>Visualizar vagas</h3>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
