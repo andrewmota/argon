@@ -44,4 +44,16 @@ class HabilidadeController
     def deleteUsuario(params)
         @dao.deleteUsuario(params['usuario'], params['habilidade'])
     end
+
+    def getVaga(vaga)
+        @dao.getVaga(vaga)
+    end
+
+    def saveVaga(params, habilidade)
+        @dao.saveVaga(params, habilidade)
+    end
+
+    def deleteVaga(params)
+        @dao.deleteVaga(params['vaga'], params['habilidade'])
+    end
 end

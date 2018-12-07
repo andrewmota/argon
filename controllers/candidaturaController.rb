@@ -25,6 +25,10 @@ class CandidaturaController
     def get(id)
         @dao.get(id)
     end
+
+    def changeStatus(candidatura)
+        @dao.save(candidatura)
+    end
     
     def getVaga(id)
         @dao.getVaga(id)

@@ -18,7 +18,7 @@
 						</div>
 					</div>
 					<div class="form-group">
-                        <select class="custom-select" name="nivel" required>
+                        <select class="form-control form-control-alternative" name="nivel" required>
 							<option disabled>Nível</option>
 							<% @opcoes['nivel'].to_hash().each do |chave, valor| %>
 								<% if @vaga.nivel == chave %>
@@ -30,7 +30,7 @@
 						</select>
                     </div>
 					<div class="form-group">
-                        <select class="custom-select" name="tipoContrato" required>
+                        <select class="form-control form-control-alternative" name="tipoContrato" required>
 							<option disabled>Tipo Contrato</option>
 							<% @opcoes['tipoContrato'].to_hash().each do |chave, valor| %>
 								<% if @vaga.tipoContrato == valor %>
@@ -42,7 +42,7 @@
 						</select>
                     </div>
 					<div class="form-group">
-                        <select class="custom-select" name="remoto" required>
+                        <select class="form-control form-control-alternative" name="remoto" required>
 							<option disabled>Trabalho remoto?</option>
 							<% @opcoes['remoto'].to_hash().each do |chave, valor| %>
 								<% if @vaga.remoto == valor %>

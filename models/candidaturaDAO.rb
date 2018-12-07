@@ -4,10 +4,6 @@ require_relative("vagaDAO.rb")
 require_relative("usuarioDAO.rb")
 
 class CandidaturaDAO
-    def initialize
-        @hash = {"R" => "Revisão", "N" => "Negada", "E" => "Entrevista"}
-    end
-    
     def save(candidatura)
         array = [candidatura.usuario.id, candidatura.vaga.id, candidatura.status];
         
@@ -15,7 +11,7 @@ class CandidaturaDAO
             query = 'INSERT INTO candidatura (idusuario, idvaga, status) VALUES ($1, $2, $3) RETURNING id'
         else
             query = 'UPDATE candidatura SET idusuario = $2, idvaga = $3, status = $4 WHERE id = $1'
-            array<<candidatura.id
+            array = [candidatura.id, candidatura.usuario.id, candidatura.vaga.id, candidatura.status];
         end
         
         res = conecta{|con|         
@@ -40,7 +36,7 @@ class CandidaturaDAO
             candidatura.id = linha["id"]
             candidatura.usuario = usuarioDAO.get(linha["idusuario"])
             candidatura.vaga = vagaDAO.get(linha["idvaga"])
-            candidatura.status = @hash[linha["status"]]
+            candidatura.status = linha["status"]
 
             lista.push candidatura
         }
@@ -68,7 +64,7 @@ class CandidaturaDAO
             candidatura.id = res[0]["id"]
             candidatura.usuario = usuarioDAO.get(res[0]["idusuario"])
             candidatura.vaga = vagaDAO.get(res[0]["idvaga"])
-            candidatura.status = @hash[res[0]["status"]]
+            candidatura.status = res[0]["status"]
 
             candidatura
         else
@@ -89,7 +85,7 @@ class CandidaturaDAO
             candidatura.id = linha["id"]
             candidatura.usuario = usuarioDAO.get(linha["idusuario"])
             candidatura.vaga = vagaDAO.get(linha["idvaga"])
-            candidatura.status = @hash[linha["status"]]
+            candidatura.status = linha["status"]
 
             lista.push candidatura
         }
@@ -109,7 +105,7 @@ class CandidaturaDAO
             candidatura.id = linha["id"]
             candidatura.usuario = usuarioDAO.get(linha["idusuario"])
             candidatura.vaga = vagaDAO.get(linha["idvaga"])
-            candidatura.status = @hash[linha["status"]]
+            candidatura.status = linha["status"]
 
             lista.push candidatura
         }

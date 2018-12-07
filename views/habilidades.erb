@@ -1,15 +1,12 @@
 <div class="row">
     <div class="col-xl-8 ml-auto mr-auto">
         <div class="card bg-secondary shadow">
-            <div class="card-header bg-white border-0">
-                <div class="row align-items-center">
-                    <div class="col-12">
-                        <h4 class="mb-0">Informe suas habilidades e indique quanto tempo de experiência você possui em cada uma</h4>
-                    </div>
-                </div>
-            </div>
             <div class="card-body">
-                <input name="idUsuario" type="hidden" value="<%= @usuario.id %>" disabled>
+                <% if @usuario %>
+                    <input name="idUsuario" type="hidden" value="<%= @usuario.id %>" disabled>
+                <% elsif @vaga %>
+                    <input name="idVaga" type="hidden" value="<%= @vaga.id %>" disabled>
+                <% end %>
                 <div class="pl-lg-4">
                     <div class="row habilidade">
                         <div class="col-lg-4">
@@ -19,30 +16,13 @@
                         </div>
                         <div class="col-lg-7">
                             <div style="margin-top: 2.5%;" class="row ml-2">
-                                <div class="custom-control custom-radio col-md-2">
-                                    <input name="tempo" class="custom-control-input" id="0-1" value="0-1" type="radio" checked="" autocomplete="off">
-                                    <label class="custom-control-label" for="0-1">0-1</label>
-                                </div> 
-                                <div class="custom-control custom-radio col-md-2">
-                                    <input name="tempo" class="custom-control-input" id="1-2" value="1-2" type="radio" autocomplete="off">
-                                    <label class="custom-control-label" for="1-2">1-2</label>
-                                </div>
-                                <div class="custom-control custom-radio col-md-2">
-                                    <input name="tempo" class="custom-control-input" id="2-3" value="2-3" type="radio" autocomplete="off">
-                                    <label class="custom-control-label" for="2-3">2-3</label>
-                                </div> 
-                                <div class="custom-control custom-radio col-md-2">
-                                    <input name="tempo" class="custom-control-input" id="3-4" value="3-4" type="radio" autocomplete="off">
-                                    <label class="custom-control-label" for="3-4">3-4</label>
-                                </div> 
-                                <div class="custom-control custom-radio col-md-2">
-                                    <input name="tempo" class="custom-control-input" id="4-5" value="4-5" type="radio" autocomplete="off">
-                                    <label class="custom-control-label" for="4-5">4-5</label>
-                                </div> 
-                                <div class="custom-control custom-radio col-md-2">
-                                    <input name="tempo" class="custom-control-input" id="5+" value="5+" type="radio" autocomplete="off">
-                                    <label class="custom-control-label" for="5+">5+</label>
-                                </div> 
+                                <%  arrayTempos = ['0-1', '1-2', '2-3', '3-4', '4-5', '5+'] 
+                                    for tempoArray in arrayTempos %>
+                                        <div class="custom-control custom-radio col-md-2">
+                                            <input name="tempo" class="custom-control-input" id="<%= tempoArray %>" value="<%= tempoArray %>" type="radio" autocomplete="off">
+                                            <label class="custom-control-label" for="<%= tempoArray %>"><%= tempoArray %></label>
+                                        </div> 
+                                <% end %>
                             </div> 
                         </div>
                         <a style="margin-top: 1.5%;" href="javascript:void(0)" class="adicionaHabilidade">

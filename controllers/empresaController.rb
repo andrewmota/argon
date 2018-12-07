@@ -8,7 +8,11 @@ class EmpresaController
     end
     
     def save(params)
-        passwordEncrypted = @senha = Digest::MD5.hexdigest params['senha']
+        if !params['id']
+            passwordEncrypted = Digest::MD5.hexdigest params['senha']
+        else
+            passwordEncrypted = params['senha']
+        end
         empresa = Empresa.new(nil, params['nome'], params['email'], params['login'], passwordEncrypted, params['tipo'])
         empresa.id = params['id'] if params['id']
 

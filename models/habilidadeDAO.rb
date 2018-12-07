@@ -1,6 +1,7 @@
 require_relative("conexao.rb")
 require_relative("habilidade.rb")
 require_relative("usuarioDAO.rb")
+require_relative("vagaDAO.rb")
 
 class HabilidadeDAO
 	def save(habilidade)
@@ -105,6 +106,41 @@ class HabilidadeDAO
         if usuario and habilidade
             conecta{|con|         
                 con.exec_params('DELETE FROM usuarioSkills WHERE idusuario = $1 and idhabilidade = $2', [usuario, habilidade])
+            } 
+        end
+    end
+
+    def getVaga(vaga)
+        res = conecta{|con|
+            con.exec('SELECT habilidade.id, habilidade.nome, vagaSkills."tempoExperiencia" FROM vagaSkills INNER JOIN habilidade ON habilidade.id = vagaSkills.idHabilidade WHERE vagaSkills.idvaga = $1', [vaga.id])
+        }
+        lista = Hash.new
+
+        res.each {|linha|
+            habilidade = Habilidade.new nil, linha["nome"]
+            habilidade.id = linha["id"]
+
+            lista[habilidade] = linha["tempoExperiencia"]
+        }
+        
+        lista
+    end
+
+    def saveVaga(params, habilidade)
+        vagaDAO = VagaDAO.new
+        vaga = vagaDAO.get(params['vaga'])
+
+        query = 'INSERT INTO vagaSkills (idvaga, idhabilidade, "tempoExperiencia") VALUES ($1, $2, $3)'
+
+        res = conecta{|con|         
+            con.exec_params(query, [vaga.id, habilidade.id, params['tempo']])
+        }
+    end
+
+    def deleteVaga(vaga, habilidade)
+        if vaga and habilidade
+            conecta{|con|         
+                con.exec_params('DELETE FROM vagaSkills WHERE idvaga = $1 and idhabilidade = $2', [vaga, habilidade])
             } 
         end
     end

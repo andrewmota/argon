@@ -38,7 +38,7 @@ CREATE TABLE vaga(
 	CONSTRAINT "vagaPK" PRIMARY KEY (id),
 	CONSTRAINT "vagaFKempresa" FOREIGN KEY (idempresa) REFERENCES empresa(id)
 		ON DELETE CASCADE
-		ON UPDATE CASCADE,
+		ON UPDATE CASCADE
 );
 
 CREATE TABLE candidatura(
@@ -69,6 +69,18 @@ CREATE TABLE usuarioSkills(
 		ON DELETE CASCADE
 		ON UPDATE CASCADE,
 	CONSTRAINT "usuarioSkillshabilidade" FOREIGN KEY (idhabilidade) REFERENCES habilidade(id)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE
+);
+
+CREATE TABLE vagaSkills(
+	idvaga int NOT NULL,
+	idhabilidade int NOT NULL,
+	"tempoExperiencia" text NOT NULL,
+	CONSTRAINT "vagaSkillsFKvaga" FOREIGN KEY (idvaga) REFERENCES vaga(id)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE,
+	CONSTRAINT "vagaSkillsFKhabilidade" FOREIGN KEY (idhabilidade) REFERENCES habilidade(id)
 		ON DELETE CASCADE
 		ON UPDATE CASCADE
 );
